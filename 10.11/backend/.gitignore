@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 数据库文件（由 scripts/import_data.py 生成）
+data/*.db
