@@ -1,9 +1,16 @@
 """统计类接口：为前端图表提供聚合数据。"""
 from flask import Blueprint, jsonify, request
 
+from routes.auth import require_login
 from services import analysis
 
 stats_bp = Blueprint('stats', __name__)
+
+
+@stats_bp.before_request
+def _check_login():
+    """统计接口统一要求登录。"""
+    return require_login()
 
 
 @stats_bp.get('/dashboard')

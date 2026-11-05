@@ -1,4 +1,8 @@
-"""数据模型：招聘岗位明细表。"""
+"""数据模型：招聘岗位明细表、登录用户表。"""
+from datetime import datetime
+
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from extensions import db
 
 
@@ -55,3 +59,28 @@ class Job(db.Model):
             data['companySizeRaw'] = self.company_size
             data['industryRaw'] = self.industry
         return data
+
+
+class User(db.Model):
+    """登录用户。"""
+
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(80), nullable=False, unique=True, index=True)
+    password_hash = db.Column(db.String(255), nullable=False)
+    display_name = db.Column(db.String(80))
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'displayName': self.display_name or self.username,
+        }

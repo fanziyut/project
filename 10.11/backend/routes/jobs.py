@@ -4,9 +4,16 @@ from sqlalchemy import func, or_
 
 from extensions import db
 from models import Job
+from routes.auth import require_login
 from services.cleaning import SALARY_RANGE_ORDER
 
 jobs_bp = Blueprint('jobs', __name__)
+
+
+@jobs_bp.before_request
+def _check_login():
+    """岗位接口统一要求登录。"""
+    return require_login()
 
 
 def _top_values(column, limit=30):

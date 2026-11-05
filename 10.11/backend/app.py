@@ -17,12 +17,24 @@ def create_app():
     db.init_app(app)
 
     # 蓝图在函数内导入，确保模型在应用初始化时完成注册
+    from routes.auth import auth_bp, ensure_default_user
     from routes.jobs import jobs_bp
     from routes.stats import stats_bp
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(jobs_bp, url_prefix='/api/jobs')
     app.register_blueprint(stats_bp, url_prefix='/api/stats')
 
-    CORS(app, resources={r'/api/*': {'origins': '*'}})
+    # 登录会话依赖 Cookie，跨域时必须显式允许携带凭证
+    CORS(app, resources={r'/api/*': {
+        'origins': ['http://localhost:5173', 'http://127.0.0.1:5173',
+                    'http://localhost:5000', 'http://127.0.0.1:5000'],
+        'supports_credentials': True,
+    }})
+
+    # 自动创建缺失的数据表（不会影响已有岗位数据），并初始化默认管理员
+    with app.app_context():
+        db.create_all()
+        ensure_default_user()
 
     @app.get('/')
     def index():
@@ -59,6 +71,9 @@ def create_app():
             'version': '1.0.0',
             'endpoints': {
                 'health': '/api/health',
+                'login': '/api/auth/login',
+                'logout': '/api/auth/logout',
+                'me': '/api/auth/me',
                 'dashboard': '/api/stats/dashboard',
                 'stats': ['/api/stats/city-count', '/api/stats/industry-count',
                           '/api/stats/salary-range', '/api/stats/city-salary-avg',

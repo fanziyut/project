@@ -41,6 +41,13 @@ body {
   margin-top: 4px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .nav {
   display: flex;
   gap: 10px;
@@ -64,6 +71,128 @@ body {
   background: #fff;
   color: #667eea;
   font-weight: 600;
+}
+
+/* 当前用户与退出按钮 */
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.user-name {
+  color: #fff;
+  opacity: 0.92;
+}
+
+.logout-btn {
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* 登录页 */
+.login-page {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.login-card {
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  padding: 36px 32px 28px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.login-logo {
+  font-size: 42px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.login-brand h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.login-brand p {
+  font-size: 13px;
+  color: #888;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+.login-field input {
+  padding: 11px 14px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-field input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+}
+
+.login-error {
+  font-size: 13px;
+  color: #d9534f;
+  background: #fdf0ef;
+  border-radius: 6px;
+  padding: 9px 12px;
+}
+
+.login-btn {
+  padding: 11px 0;
+  border-radius: 8px;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-hint {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
 }
 
 .container {
@@ -394,6 +523,10 @@ tbody tr:hover {
   }
   .header h1 {
     font-size: 18px;
+  }
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
   }
   .filter-bar select,
   .filter-bar input {
