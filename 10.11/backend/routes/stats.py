@@ -13,7 +13,7 @@ def _check_login():
     return require_login()
 
 
- @stats_bp.get('/dashboard')
+@stats_bp.get('/dashboard')
 def dashboard():
     """一次性返回仪表盘全部数据。"""
     return jsonify(analysis.dashboard())
